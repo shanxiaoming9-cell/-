@@ -5,10 +5,16 @@ Page({
     allDishes: [],
     filteredDishes: [],
     activeTab: '全部',
-    selectedCount: 0
+    selectedCount: 0,
+    historyOrder: null
   },
-  onLoad() {
+  onShow() {
     this.loadDishes();
+    this.loadHistory();
+  },
+  loadHistory() {
+    const order = db.getTodaysOrder();
+    this.setData({ historyOrder: order });
   },
   loadDishes() {
     let dishes = db.getDishes();
@@ -67,11 +73,14 @@ Page({
 
     db.submitOrder(selectedIds);
 
+    // Simulate WeChat Notification to Mom
     wx.showToast({
-      title: '发送成功!',
+      title: '已通知妈妈! 👩',
       icon: 'success',
       duration: 2000
     });
+
+    this.loadHistory();
 
     setTimeout(() => {
       wx.navigateTo({

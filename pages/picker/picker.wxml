@@ -4,11 +4,25 @@
     <view class="tab-item {{activeTab === '全部' ? 'active' : ''}}" bindtap="onTabClick" data-tab="全部">全部</view>
     <view class="tab-item {{activeTab === '荤菜' ? 'active' : ''}}" bindtap="onTabClick" data-tab="荤菜">肉肉</view>
     <view class="tab-item {{activeTab === '素菜' ? 'active' : ''}}" bindtap="onTabClick" data-tab="素菜">蔬菜</view>
+    <view class="tab-item {{activeTab === '荤素菜' ? 'active' : ''}}" bindtap="onTabClick" data-tab="荤素菜">荤素搭配</view>
     <view class="tab-item {{activeTab === '汤羹' ? 'active' : ''}}" bindtap="onTabClick" data-tab="汤羹">喝汤</view>
   </scroll-view>
 
   <!-- Dish Grid -->
   <scroll-view scroll-y class="dish-scroll">
+    <!-- History Section -->
+    <view class="history-section" wx:if="{{historyOrder}}">
+      <view class="history-title">📅 今天已点:</view>
+      <scroll-view scroll-x class="history-scroll" enable-flex>
+          <block wx:for="{{historyOrder.detailedDishes}}" wx:key="id">
+              <view class="history-item">
+                  <image src="{{item.image}}" mode="aspectFill" class="history-img"></image>
+                  <text class="history-name">{{item.name}}</text>
+              </view>
+          </block>
+      </scroll-view>
+    </view>
+
     <view class="dish-grid">
       <block wx:for="{{filteredDishes}}" wx:key="id">
         <view class="grid-item">

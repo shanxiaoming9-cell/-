@@ -24,7 +24,8 @@
     <button class="role-btn summary-btn" bindtap="navToSummary">
       <text class="icon">📅</text>
       <view class="text-group">
-        <text class="main-text">查看今日菜单</text>
+        <text class="main-text">今日菜单</text>
+        <text class="sub-text">感谢妈妈</text>
       </view>
     </button>
   </view>

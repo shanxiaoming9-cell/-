@@ -64,8 +64,13 @@ function addDish(dish) {
   return newDish;
 }
 
+function getLocalTodayDate() {
+  const now = new Date();
+  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+}
+
 function submitOrder(selectedDishIds) {
-  const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+  const today = getLocalTodayDate();
   const orders = wx.getStorageSync(ORDERS_KEY) || [];
 
   // Remove existing order for today if any (overwrite logic)
@@ -85,7 +90,7 @@ function submitOrder(selectedDishIds) {
 }
 
 function getTodaysOrder() {
-  const today = new Date().toISOString().split('T')[0];
+  const today = getLocalTodayDate();
   const orders = wx.getStorageSync(ORDERS_KEY) || [];
   const order = orders.find(o => o.date === today);
 

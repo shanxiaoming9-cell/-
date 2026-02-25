@@ -102,3 +102,50 @@
   margin: 0;
   line-height: 2;
 }
+
+.history-section {
+  background: white;
+  padding: 20rpx;
+  border-radius: 20rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 10rpx rgba(0,0,0,0.05);
+}
+
+.history-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+.history-scroll {
+  display: flex;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.history-item {
+  display: inline-block;
+  margin-right: 20rpx;
+  text-align: center;
+  width: 120rpx;
+  vertical-align: top;
+}
+
+.history-img {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 10rpx;
+  margin-bottom: 5rpx;
+  background-color: #eee;
+}
+
+.history-name {
+  font-size: 24rpx;
+  color: #666;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

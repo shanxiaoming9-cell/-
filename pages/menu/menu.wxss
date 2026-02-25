@@ -134,3 +134,25 @@
   background-color: #FF7F50;
   color: white;
 }
+
+.image-uploader {
+  width: 150rpx;
+  height: 150rpx;
+  background-color: #f0f0f0;
+  border-radius: 10rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border: 2rpx dashed #ccc;
+}
+
+.preview-img {
+  width: 100%;
+  height: 100%;
+}
+
+.placeholder {
+  font-size: 24rpx;
+  color: #999;
+}
