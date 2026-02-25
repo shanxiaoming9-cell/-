@@ -1,0 +1,28 @@
+<view class="container summary-page">
+  <view class="header">
+    <text class="date">{{date}}</text>
+    <text class="title">今日菜单</text>
+  </view>
+
+  <scroll-view scroll-y class="content" wx:if="{{order}}">
+    <view class="dish-list">
+      <block wx:for="{{order.detailedDishes}}" wx:key="id">
+        <view class="dish-item">
+          <image class="dish-img" src="{{item.image}}" mode="aspectFill"></image>
+          <view class="dish-info">
+            <text class="dish-name">{{item.name}}</text>
+            <text class="dish-recipe" wx:if="{{item.recipe}}">做法: {{item.recipe}}</text>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <button class="confirm-btn" bindtap="startCooking">开始做饭! 🍳</button>
+  </scroll-view>
+
+  <view class="empty" wx:else>
+    <text class="empty-emoji">⏳</text>
+    <text class="empty-text">宝宝还没点菜呢~</text>
+    <button class="remind-btn" bindtap="remindChild">去催一下</button>
+  </view>
+</view>

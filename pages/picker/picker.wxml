@@ -1,0 +1,33 @@
+<view class="container picker-page">
+  <!-- Tabs -->
+  <scroll-view scroll-x class="tabs" enable-flex>
+    <view class="tab-item {{activeTab === '全部' ? 'active' : ''}}" bindtap="onTabClick" data-tab="全部">全部</view>
+    <view class="tab-item {{activeTab === '荤菜' ? 'active' : ''}}" bindtap="onTabClick" data-tab="荤菜">肉肉</view>
+    <view class="tab-item {{activeTab === '素菜' ? 'active' : ''}}" bindtap="onTabClick" data-tab="素菜">蔬菜</view>
+    <view class="tab-item {{activeTab === '汤羹' ? 'active' : ''}}" bindtap="onTabClick" data-tab="汤羹">喝汤</view>
+  </scroll-view>
+
+  <!-- Dish Grid -->
+  <scroll-view scroll-y class="dish-scroll">
+    <view class="dish-grid">
+      <block wx:for="{{filteredDishes}}" wx:key="id">
+        <view class="grid-item">
+          <dish-card dish="{{item}}" selected="{{item.selected}}" bind:toggle="onToggleDish" data-id="{{item.id}}"></dish-card>
+        </view>
+      </block>
+      <view class="empty-placeholder" wx:if="{{filteredDishes.length === 0}}">
+        <text>这里没有菜哦~</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- Bottom Action Bar -->
+  <view class="bottom-bar-wrapper" wx:if="{{selectedCount > 0}}">
+    <view class="bottom-bar">
+      <view class="selected-info">
+        已选: <text class="count">{{selectedCount}}</text> 道菜
+      </view>
+      <button class="submit-btn" bindtap="submitOrder">发送给妈妈 🚀</button>
+    </view>
+  </view>
+</view>

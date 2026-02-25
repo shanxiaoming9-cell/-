@@ -1,0 +1,7 @@
+<view class="dish-card {{selected ? 'selected' : ''}}" bindtap="onTap">
+  <image class="dish-image" src="{{dish.image}}" mode="aspectFill"></image>
+  <view class="dish-info">
+    <text class="dish-name">{{dish.name}}</text>
+  </view>
+  <view wx:if="{{selected}}" class="check-mark">✓</view>
+</view>

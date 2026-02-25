@@ -1,0 +1,104 @@
+.picker-page {
+  padding-top: 100rpx; /* Space for tabs */
+  padding-bottom: 120rpx; /* Space for bottom bar */
+}
+
+.tabs {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100rpx;
+  background: white;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  box-shadow: 0 4rpx 10rpx rgba(0,0,0,0.05);
+  z-index: 100;
+  padding-left: 20rpx;
+  box-sizing: border-box;
+}
+
+.tab-item {
+  display: inline-block;
+  padding: 10rpx 30rpx;
+  margin-right: 20rpx;
+  font-size: 30rpx;
+  color: #666;
+  border-radius: 30rpx;
+  background-color: #f5f5f5;
+  transition: all 0.2s;
+}
+
+.tab-item.active {
+  background-color: #FF7F50;
+  color: white;
+  font-weight: bold;
+}
+
+.dish-scroll {
+  height: calc(100vh - 100rpx); /* Full height minus tabs */
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+
+.dish-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding-bottom: 120rpx; /* Extra padding for bottom bar */
+}
+
+.grid-item {
+  width: 48%;
+  margin-bottom: 20rpx;
+}
+
+.empty-placeholder {
+  width: 100%;
+  text-align: center;
+  padding-top: 100rpx;
+  color: #999;
+}
+
+.bottom-bar-wrapper {
+  position: fixed;
+  bottom: 40rpx;
+  left: 0;
+  width: 100%;
+  padding: 0 40rpx;
+  box-sizing: border-box;
+  z-index: 100;
+}
+
+.bottom-bar {
+  background: #333;
+  color: white;
+  border-radius: 50rpx;
+  padding: 20rpx 40rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 10rpx 20rpx rgba(0,0,0,0.2);
+}
+
+.selected-info {
+  font-size: 30rpx;
+}
+
+.count {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #FF7F50;
+  margin: 0 10rpx;
+}
+
+.submit-btn {
+  background: #FF7F50;
+  color: white;
+  border-radius: 40rpx;
+  font-size: 30rpx;
+  padding: 10rpx 30rpx;
+  margin: 0;
+  line-height: 2;
+}
