@@ -63,7 +63,7 @@ Page({
 
     this.filterDishes(updatedDishes); // Pass updated list to ensure sync
   },
-  submitOrder() {
+  addToMenu() {
     const selectedIds = this.data.allDishes.filter(d => d.selected).map(d => d.id);
 
     if (selectedIds.length === 0) {
@@ -71,23 +71,12 @@ Page({
       return;
     }
 
-    // Attempt to request subscription for notification (Mock Template ID)
-    // In a real app, this ID comes from the WeChat Admin Console
-    const MOCK_TEMPLATE_ID = 'tmpl_mock_id_123456789';
-
-    // Directly process submission first to ensure user experience isn't blocked
-    // The subscription request can happen in parallel or before, but shouldn't block
-    this.processSubmission(selectedIds, MOCK_TEMPLATE_ID);
-  },
-
-  processSubmission(selectedIds, tmplId) {
     db.submitOrder(selectedIds);
 
-    // Simulate WeChat Notification to Mom
     wx.showToast({
-      title: '已通知妈妈! 👩',
+      title: '已加入菜单',
       icon: 'success',
-      duration: 2000
+      duration: 1500
     });
 
     this.loadHistory();
@@ -100,15 +89,34 @@ Page({
         selectedCount: 0
     });
     this.filterDishes(clearedDishes);
+  },
 
-    // Try subscription quietly
+  notifyMom() {
+    if (!this.data.historyOrder || !this.data.historyOrder.detailedDishes || this.data.historyOrder.detailedDishes.length === 0) {
+        wx.showToast({ title: '先点菜再通知!', icon: 'none' });
+        return;
+    }
+
+    // In a real app, this ID comes from the WeChat Admin Console
+    const MOCK_TEMPLATE_ID = 'tmpl_mock_id_123456789';
+
+    // Try subscription
     wx.requestSubscribeMessage({
-      tmplIds: [tmplId],
+      tmplIds: [MOCK_TEMPLATE_ID],
       success: (res) => {
         console.log('Subscribe success:', res);
+        // In real backend, we would trigger the message send here
       },
       fail: (err) => {
         console.log('Subscribe failed (expected in dev):', err);
+      },
+      complete: () => {
+          // Show feedback regardless of subscription result (mock behavior)
+          wx.showToast({
+              title: '已通知妈妈',
+              icon: 'success',
+              duration: 2000
+          });
       }
     });
   },

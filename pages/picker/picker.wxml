@@ -38,12 +38,19 @@
   </scroll-view>
 
   <!-- Bottom Action Bar -->
-  <view class="bottom-bar-wrapper" wx:if="{{selectedCount > 0}}">
-    <view class="bottom-bar">
+  <view class="bottom-bar-wrapper">
+    <view class="bottom-bar" wx:if="{{selectedCount > 0}}">
       <view class="selected-info">
         已选: <text class="count">{{selectedCount}}</text> 道菜
       </view>
-      <button class="submit-btn" bindtap="submitOrder">发送给妈妈 🚀</button>
+      <button class="submit-btn" bindtap="addToMenu">确认加入菜单</button>
+    </view>
+
+    <view class="bottom-bar notify-bar" wx:elif="{{historyOrder.detailedDishes.length > 0}}">
+      <view class="selected-info">
+        今日已点: <text class="count">{{historyOrder.detailedDishes.length}}</text> 道菜
+      </view>
+      <button class="notify-btn" bindtap="notifyMom">📢 通知妈妈</button>
     </view>
   </view>
 </view>
