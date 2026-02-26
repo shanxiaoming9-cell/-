@@ -99,20 +99,47 @@ function submitOrder(selectedDishIds) {
   const today = getLocalTodayDate();
   const orders = wx.getStorageSync(ORDERS_KEY) || [];
 
-  // Remove existing order for today if any (overwrite logic)
-  const otherOrders = orders.filter(o => o.date !== today);
+  // Check if order exists for today
+  let orderIndex = orders.findIndex(o => o.date === today);
+  let order;
 
-  const newOrder = {
-    id: 'o' + Date.now(),
-    date: today,
-    dishes: selectedDishIds,
-    status: 'pending', // pending, viewed
-    created_at: Date.now()
-  };
+  if (orderIndex !== -1) {
+    // Accumulate dishes
+    order = orders[orderIndex];
+    // Use Set to avoid duplicates if desired, or just concat
+    // Requirement says "accumulate", user might want to select same dish twice?
+    // Let's assume unique for now to keep it clean, or concat if they want multiples.
+    // Given context of "Meal Picker", usually you pick distinct dishes.
+    const combined = [...new Set([...order.dishes, ...selectedDishIds])];
+    order.dishes = combined;
+    orders[orderIndex] = order;
+  } else {
+    // Create new
+    order = {
+      id: 'o' + Date.now(),
+      date: today,
+      dishes: selectedDishIds,
+      status: 'pending', // pending, viewed
+      created_at: Date.now()
+    };
+    orders.push(order);
+  }
 
-  otherOrders.push(newOrder);
-  wx.setStorageSync(ORDERS_KEY, otherOrders);
-  return newOrder;
+  wx.setStorageSync(ORDERS_KEY, orders);
+  return order;
+}
+
+function removeDishFromOrder(dishId) {
+    const today = getLocalTodayDate();
+    const orders = wx.getStorageSync(ORDERS_KEY) || [];
+    const orderIndex = orders.findIndex(o => o.date === today);
+
+    if (orderIndex !== -1) {
+        const order = orders[orderIndex];
+        order.dishes = order.dishes.filter(id => id !== dishId);
+        orders[orderIndex] = order;
+        wx.setStorageSync(ORDERS_KEY, orders);
+    }
 }
 
 function getTodaysOrder() {
@@ -138,5 +165,6 @@ module.exports = {
   updateDish,
   deleteDish,
   submitOrder,
+  removeDishFromOrder,
   getTodaysOrder
 };

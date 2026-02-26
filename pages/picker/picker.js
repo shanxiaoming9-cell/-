@@ -75,26 +75,12 @@ Page({
     // In a real app, this ID comes from the WeChat Admin Console
     const MOCK_TEMPLATE_ID = 'tmpl_mock_id_123456789';
 
-    wx.requestSubscribeMessage({
-      tmplIds: [MOCK_TEMPLATE_ID],
-      success: (res) => {
-        console.log('Subscribe success:', res);
-        if (res[MOCK_TEMPLATE_ID] === 'accept') {
-           wx.showToast({ title: '订阅成功', icon: 'none' });
-        }
-      },
-      fail: (err) => {
-        console.error('Subscribe failed:', err);
-        // Often fails in dev tools without real ID, just proceed
-      },
-      complete: () => {
-        // Proceed to submit order regardless of subscription result
-        this.processSubmission(selectedIds);
-      }
-    });
+    // Directly process submission first to ensure user experience isn't blocked
+    // The subscription request can happen in parallel or before, but shouldn't block
+    this.processSubmission(selectedIds, MOCK_TEMPLATE_ID);
   },
 
-  processSubmission(selectedIds) {
+  processSubmission(selectedIds, tmplId) {
     db.submitOrder(selectedIds);
 
     // Simulate WeChat Notification to Mom
@@ -106,10 +92,39 @@ Page({
 
     this.loadHistory();
 
-    setTimeout(() => {
-      wx.navigateTo({
-        url: '/pages/summary/summary'
+    // Clear current selection
+    const { allDishes } = this.data;
+    const clearedDishes = allDishes.map(d => ({ ...d, selected: false }));
+    this.setData({
+        allDishes: clearedDishes,
+        selectedCount: 0
+    });
+    this.filterDishes(clearedDishes);
+
+    // Try subscription quietly
+    wx.requestSubscribeMessage({
+      tmplIds: [tmplId],
+      success: (res) => {
+        console.log('Subscribe success:', res);
+      },
+      fail: (err) => {
+        console.log('Subscribe failed (expected in dev):', err);
+      }
+    });
+  },
+
+  deleteHistoryItem(e) {
+      const dishId = e.currentTarget.dataset.id;
+      wx.showModal({
+          title: '删除',
+          content: '要从今日菜单中移除这道菜吗？',
+          success: (res) => {
+              if (res.confirm) {
+                  db.removeDishFromOrder(dishId);
+                  this.loadHistory();
+                  wx.showToast({ title: '已移除', icon: 'none' });
+              }
+          }
       });
-    }, 1500);
   }
 })

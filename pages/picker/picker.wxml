@@ -16,8 +16,9 @@
       <view class="history-title">📅 今天已点:</view>
       <scroll-view scroll-x class="history-scroll" enable-flex>
           <block wx:for="{{historyOrder.detailedDishes}}" wx:key="id">
-              <view class="history-item">
+              <view class="history-item" bindtap="deleteHistoryItem" data-id="{{item.id}}">
                   <image src="{{item.image}}" mode="aspectFill" class="history-img"></image>
+                  <view class="delete-overlay">x</view>
                   <text class="history-name">{{item.name}}</text>
               </view>
           </block>
