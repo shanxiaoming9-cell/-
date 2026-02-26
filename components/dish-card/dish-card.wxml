@@ -1,5 +1,5 @@
 <view class="dish-card {{selected ? 'selected' : ''}}" bindtap="onTap">
-  <image class="dish-image" src="{{dish.image}}" mode="aspectFill"></image>
+  <image class="dish-image" src="{{dish.image}}" mode="aspectFill" binderror="onImageError"></image>
   <view class="dish-info">
     <text class="dish-name">{{dish.name}}</text>
     <view wx:if="{{dish.url}}" class="link-btn" catchtap="copyLink">🔗 做法</view>

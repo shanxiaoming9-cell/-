@@ -1,4 +1,5 @@
 const db = require('../../utils/mock_db.js');
+const { DEFAULT_DISH_IMG } = require('../../utils/assets.js');
 
 Page({
   data: {
@@ -53,5 +54,17 @@ Page({
         }
       });
     }
+  },
+  onImageError(e) {
+      const index = e.currentTarget.dataset.index;
+      const key = `order.detailedDishes[${index}].image`;
+      this.setData({
+          [key]: DEFAULT_DISH_IMG
+      });
+  },
+  onDetailImageError(e) {
+      this.setData({
+          'selectedDish.image': DEFAULT_DISH_IMG
+      });
   }
 })

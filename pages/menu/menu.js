@@ -1,4 +1,5 @@
 const db = require('../../utils/mock_db.js');
+const { DEFAULT_DISH_IMG } = require('../../utils/assets.js');
 
 Page({
   data: {
@@ -39,7 +40,7 @@ Page({
                     name: d.name,
                     recipe: d.recipe,
                     tags: d.tags,
-                    image: 'https://via.placeholder.com/300x300.png?text=' + encodeURIComponent(d.name)
+                    image: DEFAULT_DISH_IMG
                 });
             });
 
@@ -95,7 +96,7 @@ Page({
     const newDish = {
       name: this.data.newDishName,
       // Use uploaded image or placeholder
-      image: this.data.newDishImage || 'https://via.placeholder.com/300x300.png?text=' + encodeURIComponent(this.data.newDishName),
+      image: this.data.newDishImage || DEFAULT_DISH_IMG,
       recipe: this.data.newDishRecipe,
       url: this.data.newDishUrl,
       tags: [this.data.newDishTag]

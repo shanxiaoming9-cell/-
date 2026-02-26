@@ -1,5 +1,7 @@
 // utils/mock_db.js
 
+const { DEFAULT_DISH_IMG } = require('./assets.js');
+
 const DISHES_KEY = 'dishes';
 const ORDERS_KEY = 'orders';
 
@@ -7,42 +9,42 @@ const initialDishes = [
   {
     id: 'd1',
     name: '糖醋排骨',
-    image: 'https://via.placeholder.com/300x300.png?text=Pork+Ribs',
+    image: DEFAULT_DISH_IMG,
     recipe: '1. 排骨焯水\n2. 炒糖色\n3. 焖煮40分钟',
     tags: ['荤菜', '妈妈拿手']
   },
   {
     id: 'd2',
     name: '番茄炒蛋',
-    image: 'https://via.placeholder.com/300x300.png?text=Tomato+Eggs',
+    image: DEFAULT_DISH_IMG,
     recipe: '先炒蛋，再炒番茄，最后混合',
     tags: ['素菜', '快手菜']
   },
   {
     id: 'd3',
     name: '玉米排骨汤',
-    image: 'https://via.placeholder.com/300x300.png?text=Soup',
+    image: DEFAULT_DISH_IMG,
     recipe: '全部放入电饭煲炖2小时',
     tags: ['汤羹']
   },
   {
     id: 'd4',
     name: '红烧肉',
-    image: 'https://via.placeholder.com/300x300.png?text=Pork+Belly',
+    image: DEFAULT_DISH_IMG,
     recipe: '五花肉切块，慢火炖',
     tags: ['荤菜']
   },
   {
     id: 'd5',
     name: '清炒时蔬',
-    image: 'https://via.placeholder.com/300x300.png?text=Vegetables',
+    image: DEFAULT_DISH_IMG,
     recipe: '大火快炒',
     tags: ['素菜']
   },
   {
     id: 'd6',
     name: '蛋炒饭',
-    image: 'https://via.placeholder.com/300x300.png?text=Fried+Rice',
+    image: DEFAULT_DISH_IMG,
     recipe: '隔夜饭最好',
     tags: ['主食']
   }

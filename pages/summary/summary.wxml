@@ -8,7 +8,7 @@
     <view class="dish-list">
       <block wx:for="{{order.detailedDishes}}" wx:key="id">
         <view class="dish-item" bindtap="onDishTap" data-dish="{{item}}">
-          <image class="dish-img" src="{{item.image}}" mode="aspectFill"></image>
+          <image class="dish-img" src="{{item.image}}" mode="aspectFill" binderror="onImageError" data-index="{{index}}"></image>
           <view class="dish-info">
             <text class="dish-name">{{item.name}}</text>
             <text class="dish-recipe" wx:if="{{item.recipe}}">做法: {{item.recipe}}</text>
@@ -29,7 +29,7 @@
   <!-- Detail Modal -->
   <view class="modal-mask" wx:if="{{selectedDish}}" bindtap="closeDetail">
     <view class="modal-content" catchtap="catchTap">
-      <image class="detail-img" src="{{selectedDish.image}}" mode="aspectFill"></image>
+      <image class="detail-img" src="{{selectedDish.image}}" mode="aspectFill" binderror="onDetailImageError"></image>
       <view class="detail-info">
         <text class="detail-name">{{selectedDish.name}}</text>
         <view class="detail-tags" wx:if="{{selectedDish.tags && selectedDish.tags.length > 0}}">
