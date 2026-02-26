@@ -1,7 +1,9 @@
 <view class="container menu-page">
   <view class="header-info">
     <view class="left-action">
-      <button class="import-btn" size="mini" bindtap="onImportExcel">📤 批量导入 (Excel)</button>
+      <view class="import-btn" bindtap="onImportExcel">
+        <text>📂 批量导入 (Excel)</text>
+      </view>
     </view>
     <text class="count-text">共 {{dishes.length}} 道私房菜</text>
   </view>

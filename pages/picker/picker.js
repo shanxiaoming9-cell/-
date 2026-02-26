@@ -71,6 +71,30 @@ Page({
       return;
     }
 
+    // Attempt to request subscription for notification (Mock Template ID)
+    // In a real app, this ID comes from the WeChat Admin Console
+    const MOCK_TEMPLATE_ID = 'tmpl_mock_id_123456789';
+
+    wx.requestSubscribeMessage({
+      tmplIds: [MOCK_TEMPLATE_ID],
+      success: (res) => {
+        console.log('Subscribe success:', res);
+        if (res[MOCK_TEMPLATE_ID] === 'accept') {
+           wx.showToast({ title: '订阅成功', icon: 'none' });
+        }
+      },
+      fail: (err) => {
+        console.error('Subscribe failed:', err);
+        // Often fails in dev tools without real ID, just proceed
+      },
+      complete: () => {
+        // Proceed to submit order regardless of subscription result
+        this.processSubmission(selectedIds);
+      }
+    });
+  },
+
+  processSubmission(selectedIds) {
     db.submitOrder(selectedIds);
 
     // Simulate WeChat Notification to Mom
