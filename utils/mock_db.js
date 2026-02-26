@@ -38,6 +38,13 @@ const initialDishes = [
     image: 'https://via.placeholder.com/300x300.png?text=Vegetables',
     recipe: '大火快炒',
     tags: ['素菜']
+  },
+  {
+    id: 'd6',
+    name: '蛋炒饭',
+    image: 'https://via.placeholder.com/300x300.png?text=Fried+Rice',
+    recipe: '隔夜饭最好',
+    tags: ['主食']
   }
 ];
 

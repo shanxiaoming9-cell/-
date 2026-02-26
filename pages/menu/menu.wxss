@@ -6,9 +6,27 @@
 
 .header-info {
   margin-bottom: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10rpx;
+}
+
+.left-action {
+  flex: 1;
+}
+
+.import-btn {
+  background-color: #28a745;
+  color: white;
+  font-size: 24rpx;
+  padding: 0 20rpx;
+  border-radius: 30rpx;
+}
+
+.count-text {
   color: #666;
   font-size: 28rpx;
-  text-align: right;
 }
 
 .dish-grid {

@@ -5,6 +5,7 @@
     <view class="tab-item {{activeTab === '荤菜' ? 'active' : ''}}" bindtap="onTabClick" data-tab="荤菜">肉肉</view>
     <view class="tab-item {{activeTab === '素菜' ? 'active' : ''}}" bindtap="onTabClick" data-tab="素菜">蔬菜</view>
     <view class="tab-item {{activeTab === '荤素菜' ? 'active' : ''}}" bindtap="onTabClick" data-tab="荤素菜">荤素搭配</view>
+    <view class="tab-item {{activeTab === '主食' ? 'active' : ''}}" bindtap="onTabClick" data-tab="主食">主食</view>
     <view class="tab-item {{activeTab === '汤羹' ? 'active' : ''}}" bindtap="onTabClick" data-tab="汤羹">喝汤</view>
   </scroll-view>
 

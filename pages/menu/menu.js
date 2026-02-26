@@ -10,6 +10,50 @@ Page({
     newDishImage: '',
     newDishUrl: ''
   },
+  onImportExcel() {
+    wx.chooseMessageFile({
+      count: 1,
+      type: 'file',
+      extension: ['xlsx', 'xls'],
+      success: (res) => {
+        // In a real app, we would upload this file to cloud function to parse
+        // or use a local library (hard without npm in simple mode)
+        const file = res.tempFiles[0];
+        console.log('Selected file:', file);
+
+        wx.showLoading({ title: '解析表格中...' });
+
+        // Simulate network/parsing delay
+        setTimeout(() => {
+            wx.hideLoading();
+
+            // Mock imported data
+            const mockImportedDishes = [
+                { name: '扬州炒饭', recipe: '隔夜饭加蛋炒', tags: ['主食'] },
+                { name: '西红柿鸡蛋面', recipe: '快手晚餐', tags: ['主食'] },
+                { name: '皮蛋瘦肉粥', recipe: '慢炖', tags: ['汤羹'] }
+            ];
+
+            mockImportedDishes.forEach(d => {
+                db.addDish({
+                    name: d.name,
+                    recipe: d.recipe,
+                    tags: d.tags,
+                    image: 'https://via.placeholder.com/300x300.png?text=' + encodeURIComponent(d.name)
+                });
+            });
+
+            this.loadDishes();
+
+            wx.showToast({
+                title: `成功导入 ${mockImportedDishes.length} 道菜!`,
+                icon: 'success'
+            });
+
+        }, 1500);
+      }
+    });
+  },
   onLoad() {
     this.loadDishes();
   },

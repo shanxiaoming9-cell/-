@@ -1,6 +1,9 @@
 <view class="container menu-page">
   <view class="header-info">
-    <text>共 {{dishes.length}} 道私房菜</text>
+    <view class="left-action">
+      <button class="import-btn" size="mini" bindtap="onImportExcel">📤 批量导入 (Excel)</button>
+    </view>
+    <text class="count-text">共 {{dishes.length}} 道私房菜</text>
   </view>
 
   <!-- Dish List -->
@@ -53,6 +56,7 @@
           <label class="tag-item"><radio value="荤菜" checked="{{newDishTag === '荤菜'}}"/>荤菜</label>
           <label class="tag-item"><radio value="素菜" checked="{{newDishTag === '素菜'}}"/>素菜</label>
           <label class="tag-item"><radio value="荤素菜" checked="{{newDishTag === '荤素菜'}}"/>荤素菜</label>
+          <label class="tag-item"><radio value="主食" checked="{{newDishTag === '主食'}}"/>主食</label>
           <label class="tag-item"><radio value="汤羹" checked="{{newDishTag === '汤羹'}}"/>汤羹</label>
         </radio-group>
       </view>
