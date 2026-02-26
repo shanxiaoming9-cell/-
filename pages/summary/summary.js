@@ -3,7 +3,8 @@ const db = require('../../utils/mock_db.js');
 Page({
   data: {
     order: null,
-    date: ''
+    date: '',
+    selectedDish: null
   },
   onLoad() {
     this.updateDate();
@@ -32,5 +33,25 @@ Page({
       title: '已催促宝宝点餐!',
       icon: 'none'
     });
+  },
+  onDishTap(e) {
+    const dish = e.currentTarget.dataset.dish;
+    this.setData({ selectedDish: dish });
+  },
+  closeDetail() {
+    this.setData({ selectedDish: null });
+  },
+  catchTap() {
+    // Prevent event propagation
+  },
+  copyLink() {
+    if (this.data.selectedDish && this.data.selectedDish.url) {
+      wx.setClipboardData({
+        data: this.data.selectedDish.url,
+        success: () => {
+          wx.showToast({ title: '链接已复制', icon: 'success' });
+        }
+      });
+    }
   }
 })

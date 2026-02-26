@@ -7,7 +7,7 @@
   <scroll-view scroll-y class="content" wx:if="{{order}}">
     <view class="dish-list">
       <block wx:for="{{order.detailedDishes}}" wx:key="id">
-        <view class="dish-item">
+        <view class="dish-item" bindtap="onDishTap" data-dish="{{item}}">
           <image class="dish-img" src="{{item.image}}" mode="aspectFill"></image>
           <view class="dish-info">
             <text class="dish-name">{{item.name}}</text>
@@ -24,5 +24,26 @@
     <text class="empty-emoji">⏳</text>
     <text class="empty-text">宝宝还没点菜呢~</text>
     <button class="remind-btn" bindtap="remindChild">去催一下</button>
+  </view>
+
+  <!-- Detail Modal -->
+  <view class="modal-mask" wx:if="{{selectedDish}}" bindtap="closeDetail">
+    <view class="modal-content" catchtap="catchTap">
+      <image class="detail-img" src="{{selectedDish.image}}" mode="aspectFill"></image>
+      <view class="detail-info">
+        <text class="detail-name">{{selectedDish.name}}</text>
+        <view class="detail-tags" wx:if="{{selectedDish.tags && selectedDish.tags.length > 0}}">
+          <text class="detail-tag" wx:for="{{selectedDish.tags}}" wx:key="*this">{{item}}</text>
+        </view>
+        <scroll-view scroll-y class="detail-scroll">
+          <text class="detail-recipe">{{selectedDish.recipe || '暂无详细做法'}}</text>
+        </scroll-view>
+
+        <view class="detail-actions">
+          <button class="action-btn link-btn" wx:if="{{selectedDish.url}}" bindtap="copyLink">🔗 复制做法链接</button>
+          <button class="action-btn close-btn" bindtap="closeDetail">关闭</button>
+        </view>
+      </view>
+    </view>
   </view>
 </view>
