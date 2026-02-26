@@ -27,7 +27,7 @@
   <!-- Add Modal -->
   <view class="modal-mask" wx:if="{{showModal}}" bindtap="hideAddModal">
     <view class="modal-content" catchtap="catchTap">
-      <view class="modal-header">添加新菜谱</view>
+      <view class="modal-header">{{editingDishId ? '修改菜谱' : '添加新菜谱'}}</view>
 
       <view class="form-group">
         <text class="label">菜名</text>

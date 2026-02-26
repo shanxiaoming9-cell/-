@@ -198,3 +198,24 @@
   color: #666;
   border: 1px solid #ddd;
 }
+
+.detail-link-container {
+  margin-top: 20rpx;
+  padding: 10rpx;
+  background-color: #f9f9f9;
+  border-radius: 10rpx;
+}
+
+.detail-link-label {
+  font-size: 24rpx;
+  color: #999;
+  display: block;
+  margin-bottom: 5rpx;
+}
+
+.detail-link-url {
+  font-size: 26rpx;
+  color: #1E88E5;
+  text-decoration: underline;
+  word-break: break-all;
+}

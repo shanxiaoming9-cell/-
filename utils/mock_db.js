@@ -73,6 +73,23 @@ function addDish(dish) {
   return newDish;
 }
 
+function updateDish(id, updatedFields) {
+  const dishes = getDishes();
+  const index = dishes.findIndex(d => d.id === id);
+  if (index !== -1) {
+    dishes[index] = { ...dishes[index], ...updatedFields };
+    wx.setStorageSync(DISHES_KEY, dishes);
+    return dishes[index];
+  }
+  return null;
+}
+
+function deleteDish(id) {
+  const dishes = getDishes();
+  const newDishes = dishes.filter(d => d.id !== id);
+  wx.setStorageSync(DISHES_KEY, newDishes);
+}
+
 function getLocalTodayDate() {
   const now = new Date();
   return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
@@ -118,6 +135,8 @@ function getTodaysOrder() {
 module.exports = {
   getDishes,
   addDish,
+  updateDish,
+  deleteDish,
   submitOrder,
   getTodaysOrder
 };

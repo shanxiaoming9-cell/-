@@ -9,7 +9,8 @@ Page({
     newDishRecipe: '',
     newDishTag: '荤菜', // Default
     newDishImage: '',
-    newDishUrl: ''
+    newDishUrl: '',
+    editingDishId: null
   },
   onImportExcel() {
     wx.chooseMessageFile({
@@ -63,7 +64,15 @@ Page({
     this.setData({ dishes });
   },
   showAddModal() {
-    this.setData({ showModal: true });
+    this.setData({
+      showModal: true,
+      editingDishId: null,
+      newDishName: '',
+      newDishRecipe: '',
+      newDishTag: '荤菜',
+      newDishImage: '',
+      newDishUrl: ''
+    });
   },
   hideAddModal() {
     this.setData({ showModal: false });
@@ -93,7 +102,7 @@ Page({
       return;
     }
 
-    const newDish = {
+    const dishData = {
       name: this.data.newDishName,
       // Use uploaded image or placeholder
       image: this.data.newDishImage || DEFAULT_DISH_IMG,
@@ -102,7 +111,13 @@ Page({
       tags: [this.data.newDishTag]
     };
 
-    db.addDish(newDish);
+    if (this.data.editingDishId) {
+        db.updateDish(this.data.editingDishId, dishData);
+        wx.showToast({ title: '修改成功' });
+    } else {
+        db.addDish(dishData);
+        wx.showToast({ title: '添加成功' });
+    }
 
     this.hideAddModal();
     this.loadDishes();
@@ -113,31 +128,50 @@ Page({
       newDishRecipe: '',
       newDishTag: '荤菜',
       newDishImage: '',
-      newDishUrl: ''
+      newDishUrl: '',
+      editingDishId: null
     });
-
-    wx.showToast({ title: '添加成功' });
   },
   onDishTap(e) {
       const dish = e.detail.dish;
-      let content = dish.recipe || '暂无做法';
-      if (dish.url) {
-          content += '\n\n(包含外部链接，点击复制)';
-      }
 
-      wx.showModal({
-          title: dish.name,
-          content: content,
-          confirmText: dish.url ? '复制链接' : '确定',
-          showCancel: !!dish.url,
+      wx.showActionSheet({
+          itemList: ['修改菜谱', '删除菜谱'],
+          itemColor: '#333333',
           success: (res) => {
-              if (res.confirm && dish.url) {
-                  wx.setClipboardData({
-                      data: dish.url,
-                      success: () => {
-                          wx.showToast({ title: '链接已复制' });
-                      }
-                  });
+              if (res.tapIndex === 0) {
+                  // Edit
+                  this.onEditDish(dish);
+              } else if (res.tapIndex === 1) {
+                  // Delete
+                  this.onDeleteDish(dish);
+              }
+          },
+          fail: (res) => {
+              console.log(res.errMsg);
+          }
+      });
+  },
+  onEditDish(dish) {
+      this.setData({
+          showModal: true,
+          editingDishId: dish.id,
+          newDishName: dish.name,
+          newDishRecipe: dish.recipe || '',
+          newDishUrl: dish.url || '',
+          newDishTag: (dish.tags && dish.tags[0]) || '荤菜',
+          newDishImage: dish.image === DEFAULT_DISH_IMG ? '' : dish.image
+      });
+  },
+  onDeleteDish(dish) {
+      wx.showModal({
+          title: '确认删除',
+          content: `确定要删除 ${dish.name} 吗？`,
+          success: (res) => {
+              if (res.confirm) {
+                  db.deleteDish(dish.id);
+                  this.loadDishes();
+                  wx.showToast({ title: '已删除', icon: 'none' });
               }
           }
       });
