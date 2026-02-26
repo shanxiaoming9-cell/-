@@ -50,9 +50,34 @@
   transform: scale(0.98);
 }
 
-.icon {
-  font-size: 60rpx;
+.icon-wrap {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-right: 30rpx;
+  box-shadow: 0 4rpx 10rpx rgba(0,0,0,0.1);
+}
+
+.child-icon-bg {
+  background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+  border: 2rpx solid #90CAF9;
+}
+
+.mom-icon-bg {
+  background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%);
+  border: 2rpx solid #EF9A9A;
+}
+
+.summary-icon-bg {
+  background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+  border: 2rpx solid #A5D6A7;
+}
+
+.icon-emoji {
+  font-size: 50rpx;
 }
 
 .text-group {
