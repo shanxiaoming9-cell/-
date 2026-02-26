@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "今日选菜",
+  "usingComponents": {
+    "dish-card": "/components/dish-card/dish-card"
+  }
+}

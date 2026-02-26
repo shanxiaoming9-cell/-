@@ -1,0 +1,66 @@
+<view class="container menu-page">
+  <view class="header-info">
+    <text>共 {{dishes.length}} 道私房菜</text>
+  </view>
+
+  <!-- Dish List -->
+  <scroll-view scroll-y class="dish-scroll">
+    <view class="dish-grid">
+      <block wx:for="{{dishes}}" wx:key="id">
+        <view class="grid-item">
+          <dish-card dish="{{item}}" bind:toggle="onDishTap"></dish-card>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+
+  <!-- Add Button (FAB) -->
+  <view class="fab" bindtap="showAddModal">
+    <text>+</text>
+  </view>
+
+  <!-- Add Modal -->
+  <view class="modal-mask" wx:if="{{showModal}}" bindtap="hideAddModal">
+    <view class="modal-content" catchtap="catchTap">
+      <view class="modal-header">添加新菜谱</view>
+
+      <view class="form-group">
+        <text class="label">菜名</text>
+        <input class="input-field" placeholder="例如: 红烧肉" model:value="{{newDishName}}" />
+      </view>
+
+      <view class="form-group">
+        <text class="label">菜品图片</text>
+        <view class="image-uploader" bindtap="chooseImage">
+            <image wx:if="{{newDishImage}}" src="{{newDishImage}}" mode="aspectFill" class="preview-img"></image>
+            <view wx:else class="placeholder">📷 点击上传</view>
+        </view>
+      </view>
+
+      <view class="form-group">
+        <text class="label">外部食谱链接 (可选)</text>
+        <input class="input-field" placeholder="粘贴下厨房/小红书链接" model:value="{{newDishUrl}}" />
+      </view>
+
+      <view class="form-group">
+        <text class="label">做法/备注</text>
+        <textarea class="input-area" placeholder="简单做法或需要买的材料" model:value="{{newDishRecipe}}" maxlength="200"></textarea>
+      </view>
+
+      <view class="form-group">
+        <text class="label">标签 (单选)</text>
+        <radio-group class="tag-group" bindchange="onTagChange">
+          <label class="tag-item"><radio value="荤菜" checked="{{newDishTag === '荤菜'}}"/>荤菜</label>
+          <label class="tag-item"><radio value="素菜" checked="{{newDishTag === '素菜'}}"/>素菜</label>
+          <label class="tag-item"><radio value="荤素菜" checked="{{newDishTag === '荤素菜'}}"/>荤素菜</label>
+          <label class="tag-item"><radio value="汤羹" checked="{{newDishTag === '汤羹'}}"/>汤羹</label>
+        </radio-group>
+      </view>
+
+      <view class="modal-actions">
+        <button class="btn cancel" bindtap="hideAddModal">取消</button>
+        <button class="btn save" bindtap="saveDish">保存</button>
+      </view>
+    </view>
+  </view>
+</view>
