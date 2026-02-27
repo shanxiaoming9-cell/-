@@ -13,6 +13,7 @@
     "newFeature": true,
     "coverView": true,
     "nodeModules": false,
+    "cloudfunctionRoot": "cloudfunctions/",
     "autoAudits": false,
     "showShadowRootInWxmlPanel": true,
     "scopeDataCheck": false,

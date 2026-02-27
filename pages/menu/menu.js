@@ -38,6 +38,31 @@ Page({
         wx.showLoading({ title: '解析表格中...' });
 
         // Simulate network/parsing delay
+        // NOTE: In a real Cloud environment, you would use the following code:
+        /*
+        const cloudPath = `excel/${Date.now()}-${file.name}`;
+        wx.cloud.uploadFile({
+          cloudPath: cloudPath,
+          filePath: file.path,
+          success: res => {
+            wx.cloud.callFunction({
+              name: 'importDishes',
+              data: {
+                fileID: res.fileID
+              },
+              success: result => {
+                const dishes = result.result.data;
+                dishes.forEach(d => db.addDish({ ...d, image: DEFAULT_DISH_IMG }));
+                this.loadDishes();
+                wx.hideLoading();
+                wx.showToast({ title: '导入成功' });
+              },
+              fail: console.error
+            })
+          }
+        })
+        */
+
         setTimeout(() => {
             try {
                 // Mock imported data based on the described format
