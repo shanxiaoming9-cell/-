@@ -15,7 +15,7 @@ Page({
   onImportExcel() {
       wx.showModal({
           title: '导入格式说明',
-          content: '请上传 Excel 文件 (.xlsx)\n\n第一列：菜名\n第二列：做法/备注\n第三列：标签 (如: 荤菜, 素菜, 主食)',
+          content: '请上传 Excel 文件 (.xlsx, .xls, .xlsm)\n\n第一列：菜名\n第二列：做法/备注\n第三列：标签 (如: 荤菜, 素菜, 主食)',
           confirmText: '选择文件',
           success: (res) => {
               if (res.confirm) {
@@ -28,7 +28,7 @@ Page({
     wx.chooseMessageFile({
       count: 1,
       type: 'file',
-      extension: ['xlsx', 'xls'],
+      extension: ['xlsx', 'xls', 'xlsm'],
       success: (res) => {
         // In a real app, we would upload this file to cloud function to parse
         // or use a local library (hard without npm in simple mode)
@@ -39,32 +39,43 @@ Page({
 
         // Simulate network/parsing delay
         setTimeout(() => {
-            wx.hideLoading();
+            try {
+                // Mock imported data based on the described format
+                const mockImportedDishes = [
+                    { name: '扬州炒饭', recipe: '隔夜饭加蛋炒', tags: ['主食'] },
+                    { name: '西红柿鸡蛋面', recipe: '快手晚餐', tags: ['主食'] },
+                    { name: '皮蛋瘦肉粥', recipe: '慢炖', tags: ['汤羹'] }
+                ];
 
-            // Mock imported data based on the described format
-            const mockImportedDishes = [
-                { name: '扬州炒饭', recipe: '隔夜饭加蛋炒', tags: ['主食'] },
-                { name: '西红柿鸡蛋面', recipe: '快手晚餐', tags: ['主食'] },
-                { name: '皮蛋瘦肉粥', recipe: '慢炖', tags: ['汤羹'] }
-            ];
-
-            mockImportedDishes.forEach(d => {
-                db.addDish({
-                    name: d.name,
-                    recipe: d.recipe,
-                    tags: d.tags,
-                    image: DEFAULT_DISH_IMG
+                mockImportedDishes.forEach(d => {
+                    db.addDish({
+                        name: d.name,
+                        recipe: d.recipe,
+                        tags: d.tags,
+                        image: DEFAULT_DISH_IMG
+                    });
                 });
-            });
 
-            this.loadDishes();
+                this.loadDishes();
+                wx.hideLoading();
 
-            wx.showToast({
-                title: `成功导入 ${mockImportedDishes.length} 道菜!`,
-                icon: 'success'
-            });
-
+                wx.showToast({
+                    title: `成功导入 ${mockImportedDishes.length} 道菜!`,
+                    icon: 'success'
+                });
+            } catch (err) {
+                console.error('Import simulation error:', err);
+                wx.hideLoading();
+                wx.showToast({
+                    title: '导入失败',
+                    icon: 'none'
+                });
+            }
         }, 1500);
+      },
+      fail: (err) => {
+          console.error('File selection failed:', err);
+          // User cancelled or error
       }
     });
   },
