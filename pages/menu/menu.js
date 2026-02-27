@@ -13,6 +13,18 @@ Page({
     editingDishId: null
   },
   onImportExcel() {
+      wx.showModal({
+          title: '导入格式说明',
+          content: '请上传 Excel 文件 (.xlsx)\n\n第一列：菜名\n第二列：做法/备注\n第三列：标签 (如: 荤菜, 素菜, 主食)',
+          confirmText: '选择文件',
+          success: (res) => {
+              if (res.confirm) {
+                  this.chooseExcelFile();
+              }
+          }
+      });
+  },
+  chooseExcelFile() {
     wx.chooseMessageFile({
       count: 1,
       type: 'file',
@@ -29,7 +41,7 @@ Page({
         setTimeout(() => {
             wx.hideLoading();
 
-            // Mock imported data
+            // Mock imported data based on the described format
             const mockImportedDishes = [
                 { name: '扬州炒饭', recipe: '隔夜饭加蛋炒', tags: ['主食'] },
                 { name: '西红柿鸡蛋面', recipe: '快手晚餐', tags: ['主食'] },
